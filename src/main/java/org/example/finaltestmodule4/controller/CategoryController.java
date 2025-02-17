@@ -1,6 +1,6 @@
 package org.example.finaltestmodule4.controller;
 
-import lombok.RequiredArgsConstructor;
+
 import org.example.finaltestmodule4.model.Category;
 import org.example.finaltestmodule4.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
-@RequestMapping("/categories")
-@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/categories")
 public class CategoryController {
     @Autowired
-    private final CategoryService categoryService;
+    private CategoryService categoryService;
 
     @GetMapping
-    public String getAllCategories(Model model) {
-        model.addAttribute("categories", categoryService.getAllCategories());
-        return "categories";
+    public List<Category> getAllCategories() {
+        return categoryService.getAllCategories();
     }
 }

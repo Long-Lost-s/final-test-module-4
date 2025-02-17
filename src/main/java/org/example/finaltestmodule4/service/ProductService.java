@@ -1,8 +1,8 @@
 package org.example.finaltestmodule4.service;
 
-import lombok.RequiredArgsConstructor;
+
+
 import org.example.finaltestmodule4.model.Product;
-import org.example.finaltestmodule4.repository.CategoryRepository;
 import org.example.finaltestmodule4.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,16 +10,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
     @Autowired
-    private final ProductRepository productRepository;
+    private ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
 
-    public Product addProduct(Product product) {
+    public Product saveProduct(Product product) {
         return productRepository.save(product);
     }
 
@@ -27,7 +26,11 @@ public class ProductService {
         productRepository.deleteById(id);
     }
 
-    public List<Product> searchProducts(String name) {
-        return productRepository.findByNameContaining(name);
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public List<Product> searchProducts(String keyword) {
+        return productRepository.findByNameContainingIgnoreCase(keyword); // Update here
     }
 }
